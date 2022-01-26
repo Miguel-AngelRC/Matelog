@@ -44,7 +44,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="card-footer text-muted {{list.clase}} text-center">
+                                        {% comment %} <div class="card-footer text-muted {{list.clase}} text-center">
                                             <h6>Requisitos mínimos para completar el tema</h6>
                                                 <div class="container">
                                                     <div class="row">
@@ -52,9 +52,9 @@
                                                         <div class="col-6">Completar {{list.tema.numMinEjercicios}} ejercicios</div>
                                                     </div>
                                                 </div>
-                                        </div>
+                                        </div> {% endcomment %}
 
-                                        <div class="card-footer text-muted {{list.clase}} text-center"> {% if list.terminado  %} Tema completado {% else %} Tema no completado {% endif %} </div>
+                                        <div class="card-footer text-muted {{list.clase}} text-center"> {{list.estadoTema}}</div>
                                         
                                         {% comment %} colapsar  {% endcomment %}
                                         <div class="accordion" id="accordion{{list.tema.id}} ">

@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             {% comment %} Panel de avance del tema {% endcomment %}
-                            <div class="card-footer text-muted {{list.clase}} text-center"> {% if list.terminada  %} Lección completada{% else %} Lección no completada {% endif %} </div>
+                            <div class="card-footer text-muted {{list.clase}} text-center"> {{list.estadoLeccion}} </div>
                     
                             {% comment %} Avance del tema {% endcomment %}
                             <div class="card-footer text-muted {{list.clase}} pt-3 px-1">

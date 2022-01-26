@@ -18,7 +18,7 @@ class Lecciones(models.Model):
     # --> Campos de la tabla
     numero = models.IntegerField(unique=True,verbose_name="Número de lección")
     titulo = models.CharField(max_length=200,verbose_name="Título de lección")
-    descripcion = models.TextField(max_length=3000,verbose_name="Descripción de lección")
+    descripcion = models.TextField(max_length=10000,verbose_name="Descripción de lección")
     
     # --> Validación extra de campos    
     def clean_fields(self, exclude=None):
@@ -45,7 +45,7 @@ class Temas (models.Model):
     idLeccion = models.ForeignKey(Lecciones, on_delete=models.PROTECT,verbose_name="Lección perteneciente")
     numero = models.CharField(max_length=20,unique=True,verbose_name="Número de Tema",help_text="Ejemplo: 1.1")
     titulo = models.CharField(max_length=200,verbose_name="Título")
-    teoria = models.TextField(max_length=3000,verbose_name="Teoría")
+    teoria = models.TextField(max_length=10000,verbose_name="Teoría")
     numMinEjemplos = models.IntegerField(verbose_name="Número minímo de ejemplos a consultar")
     numMinEjercicios = models.IntegerField(verbose_name="Número minímo de ejercicios a resolver")
    
@@ -77,8 +77,8 @@ class Ejemplos (models.Model):
     # --> Campos de la tabla
     idTema = models.ForeignKey(Temas,on_delete=models.PROTECT,verbose_name="Tema al que pertenece")
     numero = models.IntegerField(verbose_name="Número de Ejemplo")
-    explicacion = models.TextField(max_length=1000,verbose_name="Explicación")
-    ejemplo = models.TextField(max_length=1000,verbose_name="Ejemplo")
+    explicacion = models.TextField(max_length=10000,verbose_name="Explicación")
+    ejemplo = models.TextField(max_length=10000,verbose_name="Ejemplo")
     
     
     # --> Validación extra de campos    
@@ -105,7 +105,7 @@ class Ejemplos (models.Model):
 class TipoEjercicio (models.Model):
     # --> Campos de la tabla
     tipoEjercicio = models.CharField(max_length=200,verbose_name="Tipo de ejercicio")
-    descripcion = models.TextField(max_length=1000,verbose_name="Descripción")
+    descripcion = models.TextField(max_length=10000,verbose_name="Descripción")
     
     # --> Validación extra de campos    
     def clean_fields(self, exclude=None): 
@@ -148,9 +148,9 @@ class Ejercicios (models.Model):
     idTema = models.ForeignKey(Temas,on_delete=models.PROTECT,verbose_name="Tema al que pertenece")
     idTipoEjercicio = models.ForeignKey(TipoEjercicio,on_delete=models.PROTECT,verbose_name="Tipo de ejercicio")
     numero = models.IntegerField(verbose_name="Número de ejercicio")
-    instruccionEjercicio = models.TextField(max_length=1000,verbose_name="Instrucción de ejercicio")
-    ejercicio = models.TextField(max_length=1000,verbose_name="Ejercicio")
-    ayuda = models.TextField(max_length=1000,verbose_name="Ayuda")
+    instruccionEjercicio = models.TextField(max_length=10000,verbose_name="Instrucción de ejercicio")
+    ejercicio = models.TextField(max_length=10000,verbose_name="Ejercicio")
+    ayuda = models.TextField(max_length=10000,verbose_name="Ayuda")
     
     
     # --> Validación extra de campos    
@@ -177,7 +177,7 @@ class Ejercicios (models.Model):
 class RespuestasAbiertas (models.Model):
     # --> Campos de la tabla
     idEjercicio = models.OneToOneField(Ejercicios,on_delete=models.PROTECT,verbose_name="Respuesta de Ejercicio")
-    respuesta = models.TextField(max_length=200,verbose_name="Respuesta")
+    respuesta = models.TextField(max_length=10000,verbose_name="Respuesta")
 
     # --> Validación extra de campos
     def clean_fields(self, exclude=None):
@@ -207,7 +207,7 @@ class RespuestasOpcionMultiple (models.Model):
     # --> Campos de la tabla
     idEjercicio = models.ForeignKey(Ejercicios,on_delete=models.PROTECT,verbose_name="Ejercicio")
     numero = models.IntegerField(verbose_name="Número de respuesta")
-    respuesta = models.TextField(max_length=200,verbose_name="Respuesta")
+    respuesta = models.TextField(max_length=10000,verbose_name="Respuesta")
     correctoIncorrecto = models.BooleanField(verbose_name="¿Es la respuesta correcta?")
     
     # --> Validación extra de campos

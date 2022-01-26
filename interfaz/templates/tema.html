@@ -22,7 +22,7 @@
             <div class="col card p-0 mx-auto ">
                 <div class="card-header"> {{tema.numero}} {{tema.titulo}} </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{tema.titulo}}</h5>
+                    {% comment %} <h5 class="card-title">{{tema.titulo}}</h5> {% endcomment %}
                     <p class="card-text " style="text-align: justify;">{{tema.teoria|safe}}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-end">

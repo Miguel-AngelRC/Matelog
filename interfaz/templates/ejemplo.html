@@ -25,19 +25,15 @@
         <div class="col card p-0 mx-auto ">
             <div class="card-header d-flex justify-content-between">
                 <h5  class="card-title text-success"> Ejemplo {{ejemplo.numero}} </h5>
-                {% if ejemplo.numero <= tema.numMinEjemplos%}
-                    <div class="d-flex justify-content-end text-success"><p>{{ejemplo.numero}} de <span class="fw-bold"> {{tema.numMinEjemplos}} </span> </p></div>
-                {% else %}
-                    <div class="d-flex justify-content-end text-success"><p>Extras {{numActualEjemploExta}} de <span class="fw-bold"> {{totalExtras}} </span> </p></div>
-                {% endif %}
+                <div class="d-flex justify-content-end text-success"><p>{{ejemplo.numero}} de <span class="fw-bold"> {{numTotalEjemplos}} </span> </p></div>
                 
             </div>
 
             <div class="card-body">
                 <h5 class="card-title">Explicación</h5>
-                <p class="card-text p-3" style="text-align: justify;">{{ejemplo.explicacion|safe}}</p>
-                <h5 class="card-title">Ejemplo</h5>
-                <p class="card-text p-3" style="text-align: justify;">{{ejemplo.ejemplo|safe}}</p>
+                <div class="card-text p-3 explicacion" style="text-align: justify;">{{ejemplo.explicacion|safe}}</div>
+                <h5 class="card-title ejemplo">Ejemplo</h5>
+                <div class="card-text p-3" style="text-align: justify;">{{ejemplo.ejemplo|safe}}</div>
             </div>
             <div class="card-footer d-flex justify-content-between">
                 {% if id_ejemplo_anterior %}
@@ -51,20 +47,10 @@
                         <div><a href="{% url 'ejemplo' leccion.id tema.id id_ejemplo_siguiente  %}" class="btn btn-success">Ejemplo siguiente </a></div>
                             
                         {% if ejemplosMinCumplidos %}
-                                {% if mensajeEjemplosCumplidos  %} 
-                                    <p class="alert alert-success mt-4 ms-3" role="alert" >{{mensajeEjemplosCumplidos}}</p>
-                                {% endif %}
-
-                                <div class="d-flex justify-content-around">   
-                                    <a href="{% url 'ejercicio' leccion.id tema.id id_ejercicio_actual %}" class="btn btn-primary  mt-4">Ejercicios</a>
-                                    {% if mostrarBtnEjemplosExtras %}
-                                        <a href="{% url 'ejemplo' leccion.id tema.id primerEjemploExtra %}" class="btn btn-primary mt-4 ms-3">Ejemplos Extras</a>
-                                    {% endif %}
-                                </div>
-
+                            <div class="d-flex justify-content-around">   
+                                <a href="{% url 'ejercicio' leccion.id tema.id id_ejercicio_actual %}" class="btn btn-primary  mt-4">Ejercicios</a>
+                            </div>
                         {% endif %}
-
-                        
                 {% else %}
                     {% if id_ejercicio_actual %}
                         <div class="d-flex flex-column align-items-end">

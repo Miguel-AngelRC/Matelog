@@ -36,17 +36,21 @@ def home (request):
     for leccion in lecciones:
         leccionEstudiada = LeccionesEstudiadas.objects.filter(idEstudiante = idEstudiante, idLeccion = leccion.id)
         esTerminada = False
-        clase = ""
+        estadoLeccion = "Lección no iniciada"
+        clase = "" 
         avance = 0
         
         if leccionEstudiada:
+            estadoLeccion = "Lección en curso"
+            clase = "enCurso" 
             esTerminada = leccionEstudiada.first().terminada
             avance = leccionEstudiada.first().avance
              
             if esTerminada:
+                estadoLeccion = "Lección completada"
                 clase = "completada" # ocupada para saber que clase css debe tener en caso de haber terminado la lección
 
-        listaLecciones.append({"leccion":leccion,"terminada":esTerminada,"avance":avance,"clase":clase})
+        listaLecciones.append({"leccion":leccion,"terminada":esTerminada,"avance":avance,"clase":clase,"estadoLeccion":estadoLeccion})
 
 
     if lecciones: 
@@ -87,6 +91,7 @@ def leccion (request,id_leccion):
     for tema in temas:
         temaEstudiado = TemasEstudiados.objects.filter(idLeccionesEstudiadas=idleccionEstudiada,idTema = tema.id)
         esTerminada = False
+        estadoTema = "Tema no iniciado"
         clase = "" 
         numMinEjemplos = tema.numMinEjemplos
         numMinEjercicios = tema.numMinEjercicios
@@ -112,11 +117,14 @@ def leccion (request,id_leccion):
 
         ejemplosHechos = ""
         
-        if temaEstudiado:      
+        if temaEstudiado:
+            estadoTema = "Cursando tema"      
+            clase = "enCurso" 
             temaEstudiado = temaEstudiado.first()                  
             if temaEstudiado.terminada:
                 esTerminada = True
                 clase = "completada" # ocupada para saber que clase css debe tener en caso de haber terminado la lección
+                estadoTema = "Tema terminado"  
         
             #calcular avance
             ejemplosHechos = temaEstudiado.avanceEjemplos
@@ -164,7 +172,7 @@ def leccion (request,id_leccion):
                 'numEjerciciosExtrasHechos': ejerciciosExtrasHechos,
             }
 
-        listaTemas.append({"tema":tema,"terminado":esTerminada,"avance":avance,"clase":clase})
+        listaTemas.append({"tema":tema,"terminado":esTerminada,"avance":avance,"clase":clase,"estadoTema":estadoTema})
 
     
     # Crear contexto a llevar a la plantilla
@@ -273,11 +281,7 @@ def ejemplo (request,id_leccion,id_tema, id_ejemplo):
         'tema':tema ,
         'ejemplo':ejemplo,
         "numTotalEjemplos": numTotalEjemplos,
-        "numActualEjemploExta": ejemplo.numero - numMinEjemplos,
-        "totalExtras": numTotalEjemplos - numMinEjemplos,
         }
-    
-
 
     if  indiceAnterior >= 0: # se verifica que el indice del anterior ejemplo no sea menor a cero
         contexto['id_ejemplo_anterior'] = id_ejemplos[indiceAnterior] # se obtiene el id del anterior ejemplo con ayuda del idice obtenido al restar 1
@@ -288,20 +292,7 @@ def ejemplo (request,id_leccion,id_tema, id_ejemplo):
         if numEjemplosVistos == numMinEjemplos or ejemplo.numero == numMinEjemplos:
             contexto['ejemplosMinCumplidos'] = True
             
-            if numEjemplosVistos == numMinEjemplos and ejemplo.numero < numMinEjemplos:
-                contexto['mensajeEjemplosCumplidos'] = 'Recuerda que ya puedes avanzar hacia los ejercicios o puedes ir a los ejemplos extras😎'
-                if numMinEjemplos < numTotalEjemplos:
-                    contexto['mostrarBtnEjemplosExtras'] = True
-                    contexto['primerEjemploExtra'] = id_ejemplos[numMinEjemplos]
-            
-            if ejemplo.numero == numMinEjemplos:
-                contexto['mensajeEjemplosCumplidos'] = 'Haz logrado el número de ejemplos mínimos, puedes avanzar hacia los ejercicios o seguir viendo ejemplos😎'
-                contexto['mostrarBtnEjemplosExtras'] = False
-            
             listaEjercicios(request,id_tema,contexto)
-        
-        
-
 
     else: # si ya no hay ejemplos se obtienen los ejercios del tema
         listaEjercicios(request,id_tema,contexto)
@@ -380,8 +371,6 @@ def ejercicio (request,id_leccion,id_tema, id_ejercicio):
         'ejercicio':ejercicio,
         'ayuda': ayuda,
         'numTotalEjercicios':numTotalEjercicios,
-        "numActualEjercicioExta": ejercicio.numero - numMinEjercicios,
-        "totalExtras": numTotalEjercicios - numMinEjercicios,
     }
 
     # obtener el id del siguiente ejercicio  
@@ -397,19 +386,9 @@ def ejercicio (request,id_leccion,id_tema, id_ejercicio):
     if  indiceSiguiente < len(id_ejercicios): 
         contexto['id_ejercicio_siguiente']= id_ejercicios[indiceSiguiente]
         
-        if numEjerciciosCorrectos == numMinEjercicios or ejercicio.numero == numMinEjercicios:
+        if numEjerciciosCorrectos == numMinEjercicios :
             contexto['ejerciciosMinCumplidos'] = True
             
-            if numEjerciciosCorrectos == numMinEjercicios and ejercicio.numero < numMinEjercicios:
-                contexto['mensajeEjerciciosCumplidos'] = 'Recuerda que ya puedes avanzar hacia el siguiente tema 😎'
-                if numMinEjercicios < numTotalEjercicios:
-                    contexto['mostrarBtnEjerciciosExtras'] = True
-                    contexto['primerEjercicioExtra'] = id_ejercicios[numMinEjercicios]
-
-            if ejercicio.numero == numMinEjercicios and numEjerciciosCorrectos == numMinEjercicios:
-                contexto['mensajeEjerciciosCumplidos'] = 'Haz logrado el número de ejercicios mínimos, puedes avanzar hacia el siguiente tema o seguir realizando ejercicios 😎'
-                contexto['mostrarBtnEjerciciosExtras'] = False
-
 
     # Si hubo una petición Post
     if request.method == 'POST':
@@ -439,7 +418,7 @@ def ejercicio (request,id_leccion,id_tema, id_ejercicio):
                 
                 if respuestaEstudiante.strip().lower() == respuestaCorrecta.strip().lower():
                     request.session['bienOMal'] = True
-                    messages.success(request, f'Su respuesta fue correcta!! 😄')
+                    messages.success(request, f'Su respuesta es correcta!! 😄')
                 else:
                     messages.error(request, f'Ups esa no es la respuesta correcta 😥')
                     
@@ -471,7 +450,7 @@ def ejercicio (request,id_leccion,id_tema, id_ejercicio):
             # Saber si fue correcta la respuesta
             if respuestaCorrecta == respuestaEstudiante :
                 request.session['bienOMal'] = True
-                messages.success(request, f'Su respuesta fue correcta!! 😄')    
+                messages.success(request, f'Su respuesta es correcta!! 😄')    
             else:
                  messages.error(request, f'Ups esa no es la respuesta correcta 😥')
 
