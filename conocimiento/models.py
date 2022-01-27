@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 ####################################################################
-# Este archivo de establece el modelo para almacenar el conocimiento
+# En este archivo de establece el modelo para almacenar el conocimiento
 #############
 
 # Varaibles para almacenar los tipos de ejercicios que están códificados
