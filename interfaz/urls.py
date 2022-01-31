@@ -18,6 +18,10 @@ urlpatterns = [
     path('leccion/<int:id_leccion>/<int:id_tema>/',tema,name='tema'), # para mostrar un tema de una leccion
     path('ejemplo/<int:id_leccion>/<int:id_tema>/<int:id_ejemplo>',ejemplo, name="ejemplo"),  # para mostrar un ejemplo de un tema
     path('ejercicio/<int:id_leccion>/<int:id_tema>/<int:id_ejercicio>',ejercicio, name="ejercicio"),  # para mostrar un ejercicio de un tema
+
+    #URLs para ver explicacion de la plataforma
+    path('tutorial/',tutorial, name="tutorial"),
+
 ]
 
 #URLs para errores 404 y 500

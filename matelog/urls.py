@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('interfaz.urls')), # url 
+    path('',include('interfaz.urls')), # reenvia a la app de interfaz, es quien contiene las demaas urls
 ]

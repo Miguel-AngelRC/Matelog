@@ -12,6 +12,12 @@ from .opereaciones import *
 
 
 # # # # # # # # # # # # # # # # 
+# Vista: Página para ver vídeo de explicación de la plataforma
+def tutorial(request):
+    return render(request,"tutorial.html")
+
+
+# # # # # # # # # # # # # # # # 
 # Vista: Página para errores 404
 def error_404_view(request, exception):
     return render(request,"error_404.html")
