@@ -20,7 +20,7 @@ Como el nombre del proyecto lo indica es un ambiente que apoyará con la enseña
 
 Si desea ver los datos recopilados
 1. Ir a http://miguelrc.pythonanywhere.com/admin
-2. Iniciar sesón con usuario con permisos de lectura unicamente. 
+2. Iniciar sesión con usuario con permisos de lectura unicamente. 
 Usuario: panel
 Contraseña: 12345678@
 
