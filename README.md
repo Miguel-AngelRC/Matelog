@@ -5,12 +5,11 @@ Como el nombre del proyecto lo indica es un ambiente que apoyará con la enseña
 .
 
 ## Construido con 🛠️
-Fue desarrollado con el framework web de Django, HTML, CSS, Bootstrap y SQLite como gestor de base de datos. 
-* Django
-* Python
-* HTML
-* CSS
-* Bootstrap
+* Django 3.2.7
+* Python 3.9
+* HTML 5
+* CSS 3
+* Bootstrap 5
 * SQLite
 
 ## Ocupar ambiente en enlace de prueba
@@ -22,7 +21,8 @@ Fue desarrollado con el framework web de Django, HTML, CSS, Bootstrap y SQLite c
 Si desea ver los datos recopilados
 1. Ir a http://miguelrc.pythonanywhere.com/admin
 2. Iniciar sesón con usuario con permisos de lectura unicamente. 
-3. Usuario: panel contraseña: 12345678@
+Usuario: panel
+Contraseña: 12345678@
 
 
 ## Capturas
